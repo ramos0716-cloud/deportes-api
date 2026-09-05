@@ -1,6 +1,5 @@
 package deportes_api.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -13,78 +12,51 @@ import org.springframework.web.bind.annotation.RestController;
 
 import deportes_api.dto.JugadorDTO;
 import deportes_api.model.Jugador;
+import deportes_api.repository.JugadorRepository;
 
 @RestController
 public class JugadorController {
 
-    private final List<Jugador> jugadores = new ArrayList<>();
+    private final JugadorRepository jugadorRepository;
 
-    public JugadorController() {
-        jugadores.add(new Jugador(
-            1L,
-            "Carlos Pérez",
-            "Fútbol",
-            "Atlético Nacional"
-        ));
-
-        jugadores.add(new Jugador(
-            2L,
-            "Laura Gómez",
-            "Baloncesto",
-            "Titanes"
-        ));
-
-        jugadores.add(new Jugador(
-            3L,
-            "Andrés Rodríguez",
-            "Tenis",
-            "Liga de Tenis"
-        ));
+    public JugadorController(JugadorRepository jugadorRepository) {
+        this.jugadorRepository = jugadorRepository;
     }
 
-    // Obtener todos los jugadores
     @GetMapping("/jugadores")
     public List<Jugador> listarJugadores() {
-        return jugadores;
+        return jugadorRepository.findAll();
     }
 
-    // Obtener un jugador por ID
     @GetMapping("/jugadores/{id}")
-    public Jugador obtenerJugador(@PathVariable Long id) {
+    public ResponseEntity<Jugador> buscarJugador(@PathVariable Long id) {
 
-        return jugadores.stream()
-                .filter(jugador -> jugador.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+        return jugadorRepository.findById(id)
+                .map(jugador -> ResponseEntity.ok(jugador))
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    // Buscar jugadores por deporte
     @GetMapping("/jugadores/buscar")
-    public List<Jugador> buscarPorDeporte(@RequestParam String deporte) {
+    public List<Jugador> buscarPorDeporte(
+            @RequestParam String deporte) {
 
-        return jugadores.stream()
-                .filter(jugador ->
-                    jugador.getDeporte().equalsIgnoreCase(deporte)
-                )
-                .toList();
+        return jugadorRepository.findByDeporteIgnoreCase(deporte);
     }
 
-    // Registrar un nuevo jugador
     @PostMapping("/jugadores")
     public ResponseEntity<Jugador> crearJugador(
             @RequestBody JugadorDTO jugadorDTO) {
 
-        Long nuevoId = (long) jugadores.size() + 1;
-
         Jugador nuevoJugador = new Jugador(
-            nuevoId,
-            jugadorDTO.nombre(),
-            jugadorDTO.deporte(),
-            jugadorDTO.equipo()
+                jugadorDTO.nombre(),
+                jugadorDTO.deporte(),
+                jugadorDTO.equipo()
         );
 
-        jugadores.add(nuevoJugador);
+        Jugador jugadorGuardado = jugadorRepository.save(nuevoJugador);
 
-        return ResponseEntity.status(201).body(nuevoJugador);
+        return ResponseEntity
+                .status(201)
+                .body(jugadorGuardado);
     }
 }
