@@ -1,44 +1,34 @@
-# API REST de Deportes
+# Deportes API
+
+API REST desarrollada con Spring Boot para gestionar información de jugadores deportivos mediante operaciones CRUD y persistencia con JPA, Hibernate y H2.
 
 ## Descripción
 
-Este proyecto consiste en el desarrollo de una API REST básica para la gestión de jugadores deportivos.
+Este proyecto permite registrar, consultar, actualizar y eliminar jugadores deportivos.
 
-La API fue desarrollada utilizando Java y Spring Boot y permite consultar jugadores, buscar jugadores por deporte y registrar nuevos jugadores mediante solicitudes HTTP y datos en formato JSON.
-
-El proyecto fue desarrollado como actividad académica para el curso de Lenguaje de Programación III.
+La API utiliza una base de datos H2 para demostrar la persistencia de los datos mediante Spring Data JPA e Hibernate.
 
 ## Tecnologías utilizadas
 
-- Java 25
-- Spring Boot 4.1.1
+- Java 17
+- Spring Boot 4.0.0
+- Spring Web MVC
+- Spring Data JPA
+- Hibernate
+- H2 Database
 - Maven
-- Visual Studio Code
-- Git
-- GitHub
-- JSON
+- Git y GitHub
 
 ## Estructura del proyecto
 
 ```text
-deportes-api
-├── .mvn
-├── src
-│   └── main
-│       ├── java
-│       │   └── deportes_api
-│       │       ├── controller
-│       │       │   └── JugadorController.java
-│       │       ├── dto
-│       │       │   └── JugadorDTO.java
-│       │       ├── model
-│       │       │   └── Jugador.java
-│       │       └── DeportesApiApplication.java
-│       └── resources
-│           └── application.properties
-├── .gitattributes
-├── .gitignore
-├── mvnw
-├── mvnw.cmd
-├── pom.xml
-└── README.md
+src/main/java/deportes_api
+├── controller
+│   └── JugadorController.java
+├── dto
+│   └── JugadorDTO.java
+├── model
+│   └── Jugador.java
+├── repository
+│   └── JugadorRepository.java
+└── DeportesApiApplication.java
