@@ -1,34 +1,73 @@
-# Deportes API
+#  Deportes API
 
-API REST desarrollada con Spring Boot para gestionar información de jugadores deportivos mediante operaciones CRUD y persistencia con JPA, Hibernate y H2.
+API REST desarrollada con Java y Spring Boot para la gestión de jugadores y equipos deportivos.
 
-## Descripción
+El proyecto evolucionó desde una API REST básica hasta una aplicación con persistencia en MySQL, relaciones entre entidades, consumo de una API externa y componentes de observabilidad.
 
-Este proyecto permite registrar, consultar, actualizar y eliminar jugadores deportivos.
+---
 
-La API utiliza una base de datos H2 para demostrar la persistencia de los datos mediante Spring Data JPA e Hibernate.
+##  Descripción
 
-## Tecnologías utilizadas
+Deportes API permite gestionar información de jugadores y equipos mediante operaciones CRUD.
+
+Además, incorpora:
+
+- Persistencia de datos con MySQL.
+- JPA e Hibernate.
+- Relación entre equipos y jugadores.
+- Consumo de una API externa de clima.
+- Manejo de errores en servicios externos.
+- Spring Boot Actuator.
+- Métricas personalizadas.
+- Logs INFO, WARN y ERROR.
+- Trazabilidad de solicitudes HTTP.
+- Exposición de métricas mediante Prometheus.
+
+---
+
+##  Tecnologías utilizadas
 
 - Java 17
 - Spring Boot 4.0.0
 - Spring Web MVC
 - Spring Data JPA
 - Hibernate
-- H2 Database
+- MySQL 8.4
 - Maven
-- Git y GitHub
+- Micrometer
+- Spring Boot Actuator
+- Prometheus
+- RestClient
+- Git
+- GitHub
+- PowerShell
 
-## Estructura del proyecto
+---
+
+##  Estructura del proyecto
 
 ```text
 src/main/java/deportes_api
 ├── controller
+│   ├── ClimaController.java
+│   ├── EquipoController.java
 │   └── JugadorController.java
+│
 ├── dto
 │   └── JugadorDTO.java
+│
 ├── model
+│   ├── Equipo.java
 │   └── Jugador.java
+│
 ├── repository
+│   ├── EquipoRepository.java
 │   └── JugadorRepository.java
+│
+├── service
+│   ├── ClimaService.java
+│   ├── LogService.java
+│   ├── MetricasService.java
+│   └── RequestTracingFilter.java
+│
 └── DeportesApiApplication.java
