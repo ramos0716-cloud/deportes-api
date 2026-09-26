@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Jugador {
@@ -14,18 +16,21 @@ public class Jugador {
 
     private String nombre;
     private String deporte;
-    private String equipo;
+
+    @ManyToOne
+    @JoinColumn(name = "equipo_id")
+    private Equipo equipo;
 
     public Jugador() {
     }
 
-    public Jugador(String nombre, String deporte, String equipo) {
+    public Jugador(String nombre, String deporte, Equipo equipo) {
         this.nombre = nombre;
         this.deporte = deporte;
         this.equipo = equipo;
     }
 
-    public Jugador(Long id, String nombre, String deporte, String equipo) {
+    public Jugador(Long id, String nombre, String deporte, Equipo equipo) {
         this.id = id;
         this.nombre = nombre;
         this.deporte = deporte;
@@ -56,11 +61,11 @@ public class Jugador {
         this.deporte = deporte;
     }
 
-    public String getEquipo() {
+    public Equipo getEquipo() {
         return equipo;
     }
 
-    public void setEquipo(String equipo) {
+    public void setEquipo(Equipo equipo) {
         this.equipo = equipo;
     }
 }
